@@ -1,8 +1,9 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+#include "receiver.hpp"
 
-template<typename DataType>
+/*template<typename DataType>
 class Transmitter {
 public:
   void Send(DataType data) {
@@ -33,12 +34,18 @@ void pong()  {
     std::this_thread::sleep_for(300ms);
   }
 }
-
+*/
 
 int main() {
+  /*
   std::cout << "transmit data" << std::endl;
-  std::thread t1(pong<int>);
-  ping();
-  t1.join();
+  auto a =432;
+  std::cout << a << std::endl;
+  //std::thread t1(pong<int>);
+  //ping();
+  //t1.join();
+  */
+  Receiver r;
+  r.receive();
   return 0;
 }

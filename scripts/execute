@@ -1,0 +1,64 @@
+#!/bin/bash
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+PROJECT_PATH="$SCRIPT_PATH/.."
+
+cd $PROJECT_PATH
+
+clang=0
+debug=0
+gcc=0
+release=0
+all=0
+
+for parameter in $@
+do 
+  case $parameter in 
+  --all | -all | --a | -a)
+  all=1
+  ;;
+  --clang | -clang)
+  clang=1
+  ;;
+  --debug | -debug | --d | -d)
+  debug=1
+  ;;
+  --gcc | -gcc)
+  gcc=1
+  ;;
+  --release | -release | --r | -r)
+  release=1
+  ;;
+  esac
+done
+
+if [ $all -eq 1 ] ; then
+  debug=1
+  release=1
+  clang=1
+  gcc=1
+else
+  if [ $debug -eq 0 ] && [ $release -eq 0 ] ; then
+    echo "default build type is debug"
+    debug=1
+  fi
+  if [ $clang -eq 0 ] && [ $gcc -eq 0 ] ; then
+    echo "default compiler is gcc"
+    gcc=1
+  fi
+fi
+
+if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
+  $PROJECT_PATH/build/debug/applications/app1/app1
+fi
+
+if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
+  $PROJECT_PATH/build/release/applications/app1/app1
+fi
+
+if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
+  $PROJECT_PATH/build/debug_clang/applications/app1/app1
+fi
+
+if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
+  $PROJECT_PATH/build/release_clang/applications/app1/app1
+fi

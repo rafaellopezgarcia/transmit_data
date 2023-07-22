@@ -9,7 +9,7 @@ Objectives
 - serialize and deserialize the data
 - use a class that takes care of the transmission of the data
 - your cmake must have options
-  -- run in gcc and clang
+  -- run in gcc and clangd
   -- run in C++14 and C++17
-  -- run in debug and release mode
+  -- run in debug and release mode checked
   -- install the library
