@@ -1,0 +1,129 @@
+#!/bin/bash
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+PROJECT_PATH="$SCRIPT_PATH/.."
+
+cd $PROJECT_PATH
+
+build=0
+clang=0
+debug=0
+gcc=0
+generate=0
+release=0
+cxx=14
+all=0
+
+for parameter in $@
+do 
+  case $parameter in 
+  --all | -all | --a | -a)
+  all=1
+  ;;
+  --build | -build | --b | -b)
+  build=1
+  ;;
+  --clang | -clang)
+  clang=1
+  ;;
+  --debug | -debug | --d | -d)
+  debug=1
+  ;;
+  --gcc | -gcc)
+  gcc=1
+  ;;
+  --generate | -generate | --g | -g)
+  generate=1
+  ;;
+  --release | -release | --r | -r)
+  release=1
+  ;;
+  --cxx98 | -cxx98)
+  cxx=98
+  ;;
+  --cxx11 | -cxx11)
+  cxx=11
+  ;;
+  --cxx14 | -cxx14)
+  cxx=14
+  ;;
+  --cxx17 | -cxx17)
+  cxx=17
+  ;;
+  --cxx20 | -cxx20)
+  cxx=14
+  ;;
+  esac
+done
+
+if [ $build -eq 0 ] && [ $generate -eq 0 ] ; then
+  echo "default option is build project"
+  build=1
+fi
+
+if [ $all -eq 1 ] ; then
+  debug=1
+  release=1
+  clang=1
+  gcc=1
+else
+  if [ $debug -eq 0 ] && [ $release -eq 0 ] ; then
+    echo "default build type is debug"
+    debug=1
+  fi
+  if [ $clang -eq 0 ] && [ $gcc -eq 0 ] ; then
+    echo "default compiler is gcc"
+    gcc=1
+  fi
+fi
+
+generate() {
+  if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
+  mkdir -p ./build/debug$postfix
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug . -B ./build/debug$postfix
+  fi
+
+  if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
+  mkdir -p ./build/release$postfix
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release . -B ./build/release$postfix
+  fi
+
+  if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
+  mkdir -p ./build/debug_clang
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug . -B ./build/debug_clang
+  fi
+
+  if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
+  mkdir -p ./build/release_clang
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release . -B ./build/release_clang
+  fi
+}
+
+build() {
+  if [ $build -eq 1 ] ; then
+    if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
+    cmake --build ./build/debug
+    fi
+
+    if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
+    cmake --build ./build/release
+    fi
+
+    if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
+      cmake --build ./build/debug_clang
+    fi
+
+    if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
+    cmake --build ./build/release_clang
+    fi
+  fi
+}
+
+if [ $generate -eq 1 ] ; then
+  echo "generate"
+  generate
+fi
+
+if [ $build -eq 1 ] ; then
+  echo "build"
+  build
+fi
