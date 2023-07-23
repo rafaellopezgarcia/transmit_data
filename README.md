@@ -13,3 +13,8 @@ Objectives
   -- run in C++14 and C++17
   -- run in debug and release mode checked
   -- install the library
+  -- remember not to use globbing as a rule
+
+  -- install library in other folder
+  -- make sure it works on application
+  -- make sure it works when compiling the whole project and installing it

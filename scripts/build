@@ -4,14 +4,16 @@ PROJECT_PATH="$SCRIPT_PATH/.."
 
 cd $PROJECT_PATH
 
+add_examples=-DADD_EXAMPLES=OFF
+all=0
 build=0
 clang=0
+cxx=14
 debug=0
 gcc=0
 generate=0
+install=0
 release=0
-cxx=14
-all=0
 
 for parameter in $@
 do 
@@ -28,11 +30,17 @@ do
   --debug | -debug | --d | -d)
   debug=1
   ;;
+  --examples | -examples)
+  add_examples=-DADD_EXAMPLES=ON
+  ;;
   --gcc | -gcc)
   gcc=1
   ;;
   --generate | -generate | --g | -g)
   generate=1
+  ;;
+  --install | -install | --i | -i)
+  install=1
   ;;
   --release | -release | --r | -r)
   release=1
@@ -79,22 +87,22 @@ fi
 generate() {
   if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
   mkdir -p ./build/debug$postfix
-  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug . -B ./build/debug$postfix
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug $add_examples . -B ./build/debug$postfix
   fi
 
   if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
   mkdir -p ./build/release$postfix
-  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release . -B ./build/release$postfix
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release $add_examples . -B ./build/release$postfix
   fi
 
   if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
   mkdir -p ./build/debug_clang
-  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug . -B ./build/debug_clang
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Debug $add_examples . -B ./build/debug_clang
   fi
 
   if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
   mkdir -p ./build/release_clang
-  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release . -B ./build/release_clang
+  cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-16 -DPROJECT_CXX_STANDARD=$cxx -DCMAKE_BUILD_TYPE=Release $add_examples . -B ./build/release_clang
   fi
 }
 
@@ -118,6 +126,27 @@ build() {
   fi
 }
 
+install() {
+  if [ $build -eq 1 ] ; then
+    if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
+    cmake --install ./build/debug
+    fi
+
+    if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
+    cmake --install ./build/release
+    fi
+
+    if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
+      cmake --install ./build/debug_clang
+    fi
+
+    if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
+    cmake --install ./build/release_clang
+    fi
+  fi
+}
+
+
 if [ $generate -eq 1 ] ; then
   echo "generate"
   generate
@@ -126,4 +155,9 @@ fi
 if [ $build -eq 1 ] ; then
   echo "build"
   build
+fi
+
+if [ $install -eq 1 ] ; then
+  echo "install"
+  install
 fi
