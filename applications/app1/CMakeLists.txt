@@ -7,15 +7,12 @@ project(app1
 set(CMAKE_DEBUG_POSTFIX _deb)
 
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
-  if(CMAKE_COMPILER_IS_GNUCXX MATCHES 1)
-    message("loading com gcc library")
-    include(${INSTALL_PREFIX}/cmake/comTargets/comTargets.cmake)
-  else()
-    message("loading com clang library")
-    include(${INSTALL_PREFIX}/cmake/comTargets/comTargetsClang.cmake)
-  endif()
-  add_executable(app1)
-  target_sources(app1 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+
+list(APPEND CMAKE_PREFIX_PATH "/cmake/comTargets/")
+
+find_package(comTargets 1.0.0 EXACT)    
+add_executable(app1)
+target_sources(app1 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 target_link_libraries(app1 PRIVATE com::com)
 else()
   message("Building application as part of a bigger project")

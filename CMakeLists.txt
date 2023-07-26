@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
+set(version 1.0.0)
 project(transmit_data
-        VERSION 1.0.0
+        VERSION ${version}
         DESCRIPTION "transmit data among processes using protocol buffers"
         LANGUAGES CXX)
+
+include(CMakePackageConfigHelpers)
 
 option(ADD_EXAMPLES "Build examples" ON)
 set(PROJECT_CXX_STANDARD 98 CACHE STRING "The C++ standard for this project")       
@@ -13,7 +16,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_DEBUG_POSTFIX _deb)
 add_compile_options(-Wall -Wextra -Wpedantic)
 find_package (Threads)
-
 
 set(COM_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/receiver.hpp)
 add_library(com STATIC)
@@ -39,10 +41,9 @@ if(CMAKE_COMPILER_IS_GNUCXX MATCHES 1)
          )
 
   install(EXPORT comTargets
-          FILE comTargets.cmake
-          NAMESPACE com::
-          DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/comTargets)
-
+         FILE comTargets.cmake
+         NAMESPACE com::
+         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/comTargets)
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -59,6 +60,23 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
           DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/comTargets)
 
 endif()
+
+# Generate package configuration file
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+                              "${CMAKE_CURRENT_BINARY_DIR}/comTargetsConfig.cmake"
+                              INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/comTargets
+)
+
+# Install the generated configuration files
+install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/comTargetsConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/comTargetsConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/comTargets)
+
+# Generate the version file for the config file
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/comTargetsConfigVersion.cmake"
+                                  VERSION "${version}"
+                                  COMPATIBILITY AnyNewerVersion)
 
 if(ADD_EXAMPLES)
   message("adding examples")

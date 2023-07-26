@@ -13,6 +13,7 @@ debug=0
 gcc=0
 generate=0
 install=0
+uninstall=0
 release=0
 
 for parameter in $@
@@ -42,6 +43,9 @@ do
   --install | -install | --i | -i)
   install=1
   ;;
+  --uninstall | -uninstall | --u | -u)
+  uninstall=1
+  ;;
   --release | -release | --r | -r)
   release=1
   ;;
@@ -63,7 +67,12 @@ do
   esac
 done
 
-if [ $build -eq 0 ] && [ $generate -eq 0 ] ; then
+if [ $uninstall -eq 1 ] ; then
+  rm -rf ./build /com /cmake/comTargets
+  exit 0
+fi
+
+if [ $build -eq 0 ] && [ $generate -eq 0 ] && [ $uninstall -eq 0 ] ; then
   echo "default option is build project"
   build=1
 fi
