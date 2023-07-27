@@ -18,3 +18,22 @@ Objectives
   -- install library in other folder
   -- make sure it works on application
   -- make sure it works when compiling the whole project and installing it
+
+## Requirements
+
+### Building process
+
+- The project shall be built in GCC
+- The project shall be built in clang
+- The project shall be built in debug mode
+- The project shall be built in release mode
+- It must be possible to build the libraries independently of the examples
+- It must be possible to build the examples in isolation
+- It must be possible to build the libraries and examples
+- It shall be possible to install the libraries
+- It shall be possible to execute the examples by referencing the installed libraries
+- it shall be possible to execute the examples by referencing the uninstalled project
+
+### CI
+
+- There must be a CI validating the building process
