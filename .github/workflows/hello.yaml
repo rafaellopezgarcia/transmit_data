@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: my-step
         run: echo "Hello World!"
+      - name: "Checkout the source code"
+        uses: actions/checkout@v2
       - name: build project
         run: ls
         shell: bash
