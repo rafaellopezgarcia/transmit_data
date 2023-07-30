@@ -73,7 +73,8 @@ if [ $uninstall -eq 1 ] ; then
 fi
 
 if [ $build -eq 0 ] && [ $generate -eq 0 ] && [ $uninstall -eq 0 ] ; then
-  echo "default option is build project"
+  echo "default option is generate and build project"
+  generate=1
   build=1
 fi
 
