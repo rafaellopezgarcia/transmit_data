@@ -29,7 +29,7 @@ jobs:
       - name: "Checkout the source code"
         uses: actions/checkout@v2
       - name: "Setup environment"
-        run: sudo apt install clang 16
+        run: sudo apt install clang-16
         shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang
@@ -42,7 +42,7 @@ jobs:
       - name: "Checkout the source code"
         uses: actions/checkout@v2
       - name: "Setup environment"
-        run: sudo apt install clang 16
+        run: sudo apt install clang-16
         shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang -r
