@@ -6,3 +6,6 @@ jobs:
     steps:
       - name: my-step
         run: echo "Hello World!"
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build
+        shell: bash
