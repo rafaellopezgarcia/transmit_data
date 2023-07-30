@@ -28,6 +28,9 @@ jobs:
         run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v2
+      - name: "Setup environment"
+        run: sudo apt install clang 16
+        shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang
         shell: bash
@@ -38,6 +41,9 @@ jobs:
         run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v2
+      - name: "Setup environment"
+        run: sudo apt install clang 16
+        shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang -r
         shell: bash
