@@ -28,8 +28,11 @@ jobs:
         run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v2
-      - name: "Setup environment"
+      - name: "Update environment"
         run: sudo apt update
+        shell: bash
+      - name: "Setup environment"
+        run: sudo apt install clang
         shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang
