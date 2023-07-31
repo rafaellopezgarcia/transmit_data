@@ -1,4 +1,4 @@
-name: hello-world
+name: check builds
 on: push
 jobs:
   gcc-debug:
@@ -49,4 +49,18 @@ jobs:
           sudo apt-get install -y clang-16 lld-16
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang -r
+        shell: bash
+  all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: "Check environment"
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
+          sudo apt-get install -y clang-16 lld-16
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -clang -gcc -d -r
         shell: bash
