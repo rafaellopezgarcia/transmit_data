@@ -24,16 +24,8 @@ jobs:
   clang-debug:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v2
-      - name: "Update environment"
-        run: sudo apt update
-        shell: bash
-      - name: "Setup environment"
-        run: sudo apt install clang
-        shell: bash
       - name: "Check environment"
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
@@ -47,13 +39,14 @@ jobs:
   clang-release:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v2
-      - name: "Setup environment"
-        run: sudo apt install clang-16
-        shell: bash
+      - name: "Check environment"
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
+          sudo apt-get install -y clang-16 lld-16
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang -r
         shell: bash
