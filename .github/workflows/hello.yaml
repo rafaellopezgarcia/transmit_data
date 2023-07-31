@@ -34,6 +34,9 @@ jobs:
       - name: "Setup environment"
         run: sudo apt install clang
         shell: bash
+      - name: "Check environment"
+        run: clang --v
+        shell: bash
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang
         shell: bash
