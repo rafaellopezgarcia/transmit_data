@@ -39,7 +39,7 @@ jobs:
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           sudo apt-get update
           sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
-          sudo apt-get install -y clang-16.0 lld-16.0
+          sudo apt-get install -y clang-16 lld-16
           clang --v
         shell: bash
       - name: build project
