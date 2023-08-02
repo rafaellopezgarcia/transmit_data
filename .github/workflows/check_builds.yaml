@@ -68,7 +68,7 @@ jobs:
         shell: bash
       - name: execute application
         run: ${{ github.workspace }}/build/debug/playground_deb
-    gcc-release-examples:
+  gcc-release-examples:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the source code"
