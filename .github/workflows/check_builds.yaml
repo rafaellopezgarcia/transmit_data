@@ -4,8 +4,6 @@ jobs:
   gcc-debug:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v3
       - name: build project
@@ -14,8 +12,6 @@ jobs:
   gcc-release:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v3
       - name: build project
@@ -24,8 +20,6 @@ jobs:
   clang-debug:
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout the source code"
-        uses: actions/checkout@v3
       - name: "Check environment"
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
@@ -62,13 +56,11 @@ jobs:
           sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
           sudo apt-get install -y clang-16 lld-16
       - name: build project
-        run: ${{ github.workspace }}/scripts/build -clang -gcc -d -r
+        run: ${{ github.workspace }}/scripts/build -clang -gcc -d -r -i
         shell: bash
   gcc-debug-examples:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
       - name: "Checkout the source code"
         uses: actions/checkout@v3
       - name: build project
@@ -76,3 +68,13 @@ jobs:
         shell: bash
       - name: execute application
         run: ${{ github.workspace }}/build/debug/playground_deb
+    gcc-release-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -r -e
+        shell: bash
+      - name: execute application
+        run: ${{ github.workspace }}/build/debug/playground
