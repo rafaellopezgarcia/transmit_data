@@ -60,6 +60,32 @@ jobs:
       - name: build project
         run: sudo ${{ github.workspace }}/scripts/build -clang -gcc -d -r -i
         shell: bash
+      - name: Cache binaries
+        id: cache-binaries
+        uses: actions/cache@v3
+        with:
+          path: |
+            /com
+            /cmake
+          key: binaries
+      - name: Check cache
+        if: steps.cache-binaries.outputs.cache-hit != 'true'
+        run: echo "error"
+        shell: bash
+
+  build-all-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: Restore cached Primes
+        id: cache-binaries-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            /com
+            /cmake
+          key: binaries
   gcc-debug-examples:
     runs-on: ubuntu-latest
     steps:

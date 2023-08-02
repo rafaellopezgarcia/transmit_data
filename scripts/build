@@ -72,7 +72,7 @@ if [ $uninstall -eq 1 ] ; then
   exit 0
 fi
 
-if [ $build -eq 0 ] && [ $generate -eq 0 ] && [ $uninstall -eq 0 ] ; then
+if [ $build -eq 0 ] && [ $generate -eq 0 ] && [ $install -eq 0 ] && [ $uninstall -eq 0 ] ; then
   echo "default option is generate and build project"
   generate=1
   build=1
@@ -137,22 +137,20 @@ build() {
 }
 
 install() {
-  if [ $build -eq 1 ] ; then
-    if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
-    cmake --install ./build/debug
-    fi
+  if [ $gcc -eq 1 ] && [ $debug -eq 1 ] ; then
+  cmake --install ./build/debug
+  fi
 
-    if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
-    cmake --install ./build/release
-    fi
+  if [ $gcc -eq 1 ] && [ $release -eq 1 ] ; then
+  cmake --install ./build/release
+  fi
 
-    if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
-      cmake --install ./build/debug_clang
-    fi
+  if [ $clang -eq 1 ] && [ $debug -eq 1 ] ; then
+    cmake --install ./build/debug_clang
+  fi
 
-    if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
-    cmake --install ./build/release_clang
-    fi
+  if [ $clang -eq 1 ] && [ $release -eq 1 ] ; then
+  cmake --install ./build/release_clang
   fi
 }
 
