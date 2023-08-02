@@ -71,6 +71,7 @@ jobs:
   build-all-examples:
     runs-on: ubuntu-latest
     steps:
+      - needs: all
       - name: "Checkout the source code"
         uses: actions/checkout@v3
       - name: Restore cached Primes
