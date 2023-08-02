@@ -62,17 +62,12 @@ jobs:
         shell: bash
       - name: Cache binaries
         id: cache-binaries
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         with:
           path: |
             /com
             /cmake
-          key: binaries
-      - name: Check cache
-        if: steps.cache-binaries.outputs.cache-hit != 'true'
-        run: echo "error"
-        shell: bash
-
+          key: ${{ github.workflow }}-${{ github.sha }}
   build-all-examples:
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +80,8 @@ jobs:
           path: |
             /com
             /cmake
-          key: binaries
+          key: ${{ github.workflow }}-${{ github.sha }}
+          fail-n-cache-miss: true
   gcc-debug-examples:
     runs-on: ubuntu-latest
     steps:
