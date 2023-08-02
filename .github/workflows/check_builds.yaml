@@ -77,4 +77,4 @@ jobs:
         run: ${{ github.workspace }}/scripts/build -r -e
         shell: bash
       - name: execute application
-        run: ${{ github.workspace }}/build/debug/playground
+        run: ${{ github.workspace }}/build/release/playground
