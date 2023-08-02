@@ -20,6 +20,8 @@ jobs:
   clang-debug:
     runs-on: ubuntu-latest
     steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
       - name: "Check environment"
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
