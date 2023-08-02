@@ -75,8 +75,9 @@ jobs:
     steps:
       - name: "Checkout the source code"
         uses: actions/checkout@v3
-      - name: Restore cached Primes
+      - name: Restore cached binaries
         id: cache-binaries-restore
+        run: sudo su
         uses: actions/cache/restore@v3
         with:
           path: |
