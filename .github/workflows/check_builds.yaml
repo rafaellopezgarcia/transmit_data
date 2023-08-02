@@ -64,3 +64,15 @@ jobs:
       - name: build project
         run: ${{ github.workspace }}/scripts/build -clang -gcc -d -r
         shell: bash
+  gcc-debug-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step
+        run: echo "Hello World!"
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -e
+        shell: bash
+      - name: execute application
+        run: ${{ github.workspace }}/build/debug/playground_deb
