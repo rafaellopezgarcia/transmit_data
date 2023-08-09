@@ -17,6 +17,15 @@ set(CMAKE_DEBUG_POSTFIX _deb)
 add_compile_options(-Wall -Wextra -Wpedantic)
 find_package (Threads)
 
+
+message(***************)
+set(CMAKE_INSTALL_INCLUDEDIR "/home")
+message(DIRECTORY ${CMAKE_INSTALL_INCLUDEDIR})
+set(CMAKE_INSTALL_LIBDIR "/home")
+message(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_CURRENT_BINARY_DIR "/home")
+message(CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
 set(COM_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/receiver.hpp)
 add_library(com STATIC)
 target_sources(com PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/receiver.cpp)
