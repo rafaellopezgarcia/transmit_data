@@ -19,11 +19,11 @@ find_package (Threads)
 
 
 message(***************)
-set(CMAKE_INSTALL_INCLUDEDIR /home)
+set(CMAKE_INSTALL_INCLUDEDIR /home/runner/work)
 message(DIRECTORY ${CMAKE_INSTALL_INCLUDEDIR})
-set(CMAKE_INSTALL_LIBDIR /home)
+set(CMAKE_INSTALL_LIBDIR /home/runner/work)
 message(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
-set(CMAKE_CURRENT_BINARY_DIR /home)
+set(CMAKE_CURRENT_BINARY_DIR /home/runner/work)
 message(CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(COM_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/receiver.hpp)
