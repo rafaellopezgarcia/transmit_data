@@ -23,17 +23,30 @@ Objectives
 
 ### Building process
 
-- The project shall be built in GCC
-- The project shall be built in clang
-- The project shall be built in debug mode
-- The project shall be built in release mode
-- It must be possible to build the libraries independently of the examples
-- It must be possible to build the examples in isolation
-- It must be possible to build the libraries and examples
-- It shall be possible to install the libraries
-- It shall be possible to execute the examples by referencing the installed libraries
-- it shall be possible to execute the examples by referencing the uninstalled project
+- [T008:0004] The project shall be built in GCC
+- [T008:0005] The project shall be built in clang
+- [T008:0006] The project shall be built in debug mode
+- [T008:0007] The project shall be built in release mode
+- [T008:0008] It must be possible to build the libraries independently of the examples
+- [T008:0009] It must be possible to build the examples in isolation
+- [T008:000a] It must be possible to build the libraries and examples
+- [T008:000b] It shall be possible to install the libraries
+- [T008:000c] It shall be possible to execute the examples by referencing the installed libraries
+- [T008:000d] it shall be possible to execute the examples by referencing the uninstalled project
 
 ### CI
 
-- There must be a CI validating the building process
+- [W009:000e] There must be a CI job validating the building process
+- [W009:000f] There must be a CI job validating building the project with GCC in debug mode
+- [W009:0010] There must be a CI job validating building the project with GCC in release mode
+- [W009:0011] There must be a CI job validating building the project with clang in debug mode
+- [W009:0012] There must be a CI job validating building the project with clang in release mode
+- [W009:0013] There must be a CI job validating building the project with all different compilers using the same environment
+- [W009:0014] There must be a CI job validating building the application examples with GCC in debug mode
+- [W009:0015] There must be a CI job validating building the application examples with GCC in release mode
+- [W009:0016] There must be a CI job validating running the application examples with GCC in debug mode
+- [W009:0017] There must be a CI job validating running the application examples with GCC in release mode
+- [W009:0018] There must be a CI job validating building the application examples with GCC in debug mode **using the installed library**
+- [W009:0019] There must be a CI job validating building the application examples with GCC in release mode **using the installed library**
+- [W009:001a] There must be a CI job validating running the application examples with GCC in debug mode **using the installed library**
+- [W009:001b] There must be a CI job validating running the application examples with GCC in release mode **using the installed library**
