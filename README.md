@@ -36,17 +36,17 @@ Objectives
 
 ### CI
 
-- There must be a CI validating the building process
-- There must be a CI validating building the project with GCC in debug mode
-- There must be a CI validating building the project with GCC in release mode
-- There must be a CI validating building the project with clang in debug mode
-- There must be a CI validating building the project with clang in release mode
-- There must be a CI validating building the project with all different compilers using the same environment
-- There must be a CI validating building the application examples with GCC in debug mode
-- There must be a CI validating building the application examples with GCC in release mode
-- There must be a CI validating running the application examples with GCC in debug mode
-- There must be a CI validating running the application examples with GCC in release mode
-- There must be a CI validating building the application examples with GCC in debug mode using the installed library
-- There must be a CI validating building the application examples with GCC in release mode using the installed library
-- There must be a CI validating running the application examples with GCC in debug mode using the installed library
-- There must be a CI validating running the application examples with GCC in release mode using the installed library
+- There must be a CI job validating the building process
+- There must be a CI job validating building the project with GCC in debug mode
+- There must be a CI job validating building the project with GCC in release mode
+- There must be a CI job validating building the project with clang in debug mode
+- There must be a CI job validating building the project with clang in release mode
+- There must be a CI job validating building the project with all different compilers using the same environment
+- There must be a CI job validating building the application examples with GCC in debug mode
+- There must be a CI job validating building the application examples with GCC in release mode
+- There must be a CI job validating running the application examples with GCC in debug mode
+- There must be a CI job validating running the application examples with GCC in release mode
+- There must be a CI job validating building the application examples with GCC in debug mode **using the installed library**
+- There must be a CI job validating building the application examples with GCC in release mode **using the installed library**
+- There must be a CI job validating running the application examples with GCC in debug mode **using the installed library**
+- There must be a CI job validating running the application examples with GCC in release mode **using the installed library**
