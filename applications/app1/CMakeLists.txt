@@ -8,7 +8,7 @@ set(CMAKE_DEBUG_POSTFIX _deb)
 
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
 
-list(APPEND CMAKE_PREFIX_PATH "/cmake/comTargets/")
+list(APPEND CMAKE_PREFIX_PATH "/home/runner/work/cmake/comTargets/")
 
 find_package(comTargets 1.0.0 EXACT)    
 add_executable(app1)

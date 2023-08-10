@@ -1,0 +1,112 @@
+name: check builds
+on: push
+jobs:
+  gcc-debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build
+        shell: bash
+  gcc-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -r
+        shell: bash
+  clang-debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: "Check environment"
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
+          sudo apt-get install -y clang-16 lld-16
+        shell: bash
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -clang
+        shell: bash
+  clang-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: "Check environment"
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
+          sudo apt-get install -y clang-16 lld-16
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -clang -r
+        shell: bash
+  all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: "Check environment"
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main"
+          sudo apt-get install -y clang-16 lld-16
+      - name: build project
+        run: sudo ${{ github.workspace }}/scripts/build -g -b -clang -gcc -d -r -i
+        shell: bash
+      - name: Cache binaries
+        id: cache-binaries
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            /home/runner/work/com
+            /home/runner/work/cmake
+          key: ${{ github.workflow }}-${{ github.sha }}
+  build-all-examples:
+    runs-on: ubuntu-latest
+    needs:
+      - all
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: Restore cached binaries
+        id: cache-binaries-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            /home/runner/work/com
+            /home/runner/work/cmake
+          key: ${{ github.workflow }}-${{ github.sha }}
+          fail-on-cache-miss: true
+      - name: build application
+        run: |
+          cd ${{ github.workspace }}/applications/app1/
+          mkdir ./build && cd ./build
+          cmake .. && make
+          ./app1
+  gcc-debug-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -e
+        shell: bash
+      - name: execute application
+        run: ${{ github.workspace }}/build/debug/playground_deb
+  gcc-release-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the source code"
+        uses: actions/checkout@v3
+      - name: build project
+        run: ${{ github.workspace }}/scripts/build -r -e
+        shell: bash
+      - name: execute application
+        run: ${{ github.workspace }}/build/release/playground
