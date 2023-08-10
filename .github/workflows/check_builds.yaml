@@ -75,9 +75,6 @@ jobs:
     steps:
       - name: "Checkout the source code"
         uses: actions/checkout@v3
-      - name: provide root privilege
-        run: sudo su
-        shell: bash
       - name: Restore cached binaries
         id: cache-binaries-restore
         uses: actions/cache/restore@v3
@@ -86,7 +83,13 @@ jobs:
             /home/runner/work/com
             /home/runner/work/cmake
           key: ${{ github.workflow }}-${{ github.sha }}
-          fail-n-cache-miss: true
+          fail-on-cache-miss: true
+      - name: build application
+        run: |
+          cd ${{ github.workspace }}/applications/app1/
+          mkdir ./build && cd ./build
+          cmake .. && make
+          ./app1
   gcc-debug-examples:
     runs-on: ubuntu-latest
     steps:
