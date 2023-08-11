@@ -72,7 +72,6 @@ jobs:
     strategy:
       matrix:
         app: ["debug/app1_deb", "release/app1"]
-
     runs-on: ubuntu-latest
     needs:
       - all
