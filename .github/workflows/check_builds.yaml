@@ -90,7 +90,7 @@ jobs:
       - name: build application
         run: ${{ github.workspace }}/scripts/build_apps -g -b -gcc -r -d
       - name: run application
-        run: ${{ github.workspace }}/applications/app1/build/${{ app }}
+        run: ${{ github.workspace }}/applications/app1/build/${{ matrix.app }}
   gcc-debug-examples:
     runs-on: ubuntu-latest
     steps:
