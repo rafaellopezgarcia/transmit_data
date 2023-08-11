@@ -70,14 +70,14 @@ jobs:
           key: ${{ github.workflow }}-${{ github.sha }}
   build-all-examples:
     strategy:
-    matrix:
-      app:
-        [
-          "debug/app1_deb",
-          "release/app1",
-          "debug_clang/app1_deb",
-          "release_clang/app1",
-        ]
+      matrix:
+        app:
+          [
+            "debug/app1_deb",
+            "release/app1",
+            "debug_clang/app1_deb",
+            "release_clang/app1",
+          ]
     runs-on: ubuntu-latest
     needs:
       - all
