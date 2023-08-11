@@ -73,9 +73,9 @@ jobs:
       matrix:
         include:
           - app: "debug/app1_deb"
-            mode: "-r"
-          - app: "release/app1"
             mode: "-d"
+          - app: "release/app1"
+            mode: "-r"
     runs-on: ubuntu-latest
     needs:
       - all
